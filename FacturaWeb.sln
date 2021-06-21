@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacturaWeb", "FacturaWeb\FacturaWeb.csproj", "{52112886-0806-42CA-85DA-6435A377E7A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52112886-0806-42CA-85DA-6435A377E7A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52112886-0806-42CA-85DA-6435A377E7A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52112886-0806-42CA-85DA-6435A377E7A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52112886-0806-42CA-85DA-6435A377E7A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {26FDE56B-D490-4D55-AA40-8BB93E22A639}
+	EndGlobalSection
+EndGlobal
