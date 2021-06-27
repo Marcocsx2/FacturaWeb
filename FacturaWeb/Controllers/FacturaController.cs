@@ -21,22 +21,21 @@ namespace FacturaWeb.Controllers
         // GET: List Factura
         public async Task<ActionResult> List()
         {
-            //var url = "";
-            //var httpClient = new HttpClient();
-            //var json = await httpClient.GetStringAsync(url);
-            //var json = {"OrderId": 1}
-            //var orderList = JsonConvert.DeserializeObject<List<Order>>(json);
-
-            return View();
-        }
-
-        // GET: List Factura By ID
-        public async Task<ActionResult> Details(int id)
-        {
-            var url = "";
+            var url = "https://localhost:44327/api/OrderDetails/GetOrderDetails";
             var httpClient = new HttpClient();
             var json = await httpClient.GetStringAsync(url);
             var orderList = JsonConvert.DeserializeObject<List<Order>>(json);
+
+            return View(orderList);
+        }
+
+        // GET: List Factura By ID
+        public async Task<ActionResult> Details()
+        {
+            //var url = "";
+            //var httpClient = new HttpClient();
+            //var json = await httpClient.GetStringAsync(url);
+            //var orderList = JsonConvert.DeserializeObject<List<Order>>(json);
 
             return View();
         }

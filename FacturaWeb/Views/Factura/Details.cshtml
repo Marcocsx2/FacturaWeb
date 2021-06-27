@@ -1,75 +1,28 @@
 ﻿
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle de Factura";
 }
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Filtros</h6>
-    </div>
-    <div class="card-body">
-        <form>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md my-2">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="clientId">Cliente</label>
-                            </div>
-                            <select class="custom-select" id="clientId" name="clientId">
-                                <option selected>Seleccionar...</option>
-                                <option value="1">Cliente 1</option>
-                                <option value="2">Cliente 2</option>
-                                <option value="3">Cliente 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md my-2">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="productId">Producto</label>
-                            </div>
-                            <select class="custom-select" id="productId" name="productId">
-                                <option selected>Seleccionar...</option>
-                                <option value="1">Prodcuto 1</option>
-                                <option value="2">Prodcuto 2</option>
-                                <option value="3">Prodcuto 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md my-2">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="quantity">Cantidad</label>
-                            </div>
-                            <input type="number" class="form-control" id="quantity" name="quantity" />
-                        </div>
-                    </div>
-                    <div class="col-sm my-2">
-                        <div class="input-group">
-                            <button type="submit" class="btn btn-primary">Agregar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+<!-- Begin Page Content -->
+<div class="container-fluid">
 
-<br>
+    <br>
 
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Facturas</h1>
+
+    <br>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Productos Agregados a la Factura</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>&#9744;</th>
                             <th>Cliente</th>
                             <th>Producto</th>
                             <th>Cantidad</th>
@@ -80,7 +33,6 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>&#9744;</th>
                             <th>Cliente</th>
                             <th>Producto</th>
                             <th>Cantidad</th>
@@ -91,19 +43,17 @@
                     </tfoot>
                     <tbody>
                         <tr>
-                            <td>
-                                <input type="checkbox" />
-                            </td>
-                            <td>Marco Fox</td>
-                            <td>Tampones</td>
-                            <td>12</td>
-                            <td>S/. 3.00</td>
-                            <td>S/. 36.00</td>
+                            <td>Marco Vizcarra</td>
+                            <td>Laptop Nitro 5</td>
+                            <td>1</td>
+                            <td>S/. 3670.00</td>
+                            <td>s/. 3670.00</td>
                             <td><a type="button" class="btn btn-danger">Eliminar</a></td>
                         </tr>
                     </tbody>
                 </table>
-            </table>
+            </div>
         </div>
     </div>
 </div>
+<!-- /.container-fluid -->
