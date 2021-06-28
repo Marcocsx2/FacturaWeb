@@ -7,7 +7,6 @@
         public int Quantity { get; set; }
         public int ProductID { get; set; }
         public float Price { get; set; }
-        public virtual Product Products { get; set; }
-        public virtual Order Orders { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

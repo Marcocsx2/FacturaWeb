@@ -9,66 +9,7 @@
     <br>
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Crear nuevo Producto</h1>
-
-    <br>
-
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Agregar</h6>
-        </div>
-        <div class="card-body">
-            <form>
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md my-2">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="clientId">Cliente</label>
-                                </div>
-                                <select class="custom-select" id="clientId" name="clientId">
-                                    <option selected>Seleccionar...</option>
-                                    <option value="1">Cliente 1</option>
-                                    <option value="2">Cliente 2</option>
-                                    <option value="3">Cliente 3</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md my-2">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="productId">Producto</label>
-                                </div>
-                                <select class="custom-select" id="productId" name="productId">
-                                    <option selected>Seleccionar...</option>
-                                    <option value="1">Prodcuto 1</option>
-                                    <option value="2">Prodcuto 2</option>
-                                    <option value="3">Prodcuto 3</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md my-2">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="cantidadId">Producto</label>
-                                </div>
-                                <input type="number" class="form-control" id="cantidadId" placeholder="0" aria-label="Ingrese la cantidad de Productos" aria-describedby="addon-wrapping" />
-                            </div>
-                        </div>
-
-                        <div class="col-sm my-2">
-                            <div class="input-group justify-content-center">
-                                <button type="submit" class="btn btn-block mx-5 btn-primary">Agregar</button>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </form>
-        </div>
-    </div>
+    <h1 class="h3 mb-2 text-gray-800">Facturas</h1>
 
     <br>
 
@@ -101,14 +42,6 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        <tr>
-                            <td>Marco Vizcarra</td>
-                            <td>Laptop Nitro 5</td>
-                            <td>1</td>
-                            <td>S/. 3670.00</td>
-                            <td>s/. 3670.00</td>
-                            <td><a type="button" class="btn btn-danger">Eliminar</a></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -116,3 +49,45 @@
     </div>
 </div>
 <!-- /.container-fluid -->
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        const orderId = @Url.RequestContext.RouteData.Values["id"];
+        const url = 'https://localhost:44393' + '@Url.Action("CreateOrder")';
+
+        $(function () {
+            LoadOrderDetails(orderId);
+
+            function LoadOrderDetails(orderId) {
+                $("#dataTable tbody tr").remove();
+                $.ajax({
+                    url: 'https://localhost:44393' + '@Url.Action("GetOrderDetailsById")' + '/' + orderId,
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        console.log(data);
+                        $.each(data, function (i, item) {
+                            var rows = "<tr id='row" + item.OrderID + '-' + item.OrderDetailID + "'>"
+                                + "<td>" + 'FALTA CLIENTE EN LA API!!!!' + "</td>"
+                                + "<td>" + item.Product?.ProductName + "</td>"
+                                + "<td>" + item.Quantity + "</td>"
+                                + "<td>" + item.Product?.Price + "</td>"
+                                + "<td>" + Math.round(item.Product?.Price ? (item.Product.Price * item.Quantity) : 0) + "</td>"
+                                + "<td><a type='button' class='btn btn-danger' onclick='deleteDetail(" + item.OrderDetailID + ")'>Eliminar</a></td>"
+                                + "</tr>";
+                            $("#dataTable tbody").append(rows);
+                        })
+                    },
+                    error: function (response) {
+                        console.log('ERROR')
+                        console.log(response)
+                    }
+                });
+
+                return false;
+            }
+        });
+    </script>
+}

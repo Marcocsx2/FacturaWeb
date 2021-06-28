@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Detalle de Factura";
+    ViewBag.Title = "Crear Factura";
 }
 
 <!-- Begin Page Content -->
@@ -9,7 +9,7 @@
     <br>
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Agregar Producto</h1>
+    <h1 class="h3 mb-2 text-gray-800">Crear nuevo Producto</h1>
 
     <br>
 
@@ -26,8 +26,11 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="productId">Producto</label>
                                 </div>
-                                <select class="custom-select" id="productsSelect" name="productId">
+                                <select class="custom-select" id="productId" name="productId">
                                     <option selected>Seleccionar...</option>
+                                    <option value="1">Prodcuto 1</option>
+                                    <option value="2">Prodcuto 2</option>
+                                    <option value="3">Prodcuto 3</option>
                                 </select>
                             </div>
                         </div>
@@ -43,7 +46,7 @@
 
                         <div class="col-sm my-2">
                             <div class="input-group justify-content-center">
-                                <a id="btnSave" class="btn btn-block mx-5 btn-primary">Agregar</a>
+                                <button id="btnSave" type="submit" class="btn btn-block mx-5 btn-primary">Agregar</button>
                             </div>
                         </div>
 
@@ -92,6 +95,7 @@
     </div>
 </div>
 <!-- /.container-fluid -->
+
 @section Scripts
 {
     <script type="text/javascript">
@@ -101,10 +105,36 @@
         const url = 'https://localhost:44393' + '@Url.Action("CreateOrderDetail")';
         console.log(url);
         $(function () {
-            LoadData();
-            LoadAllProducts()
+            LoadOrderDetails(orderId);
 
-            function LoadData() {
+            $("#btnSave").click(function () {
+                var orderDetail = {};
+                orderDetail.OrderID = orderId;
+                orderDetail.ProductID = $("#productId").val();
+                orderDetail.Quantity = $("#cantidad").val();
+                CreateOrderDetails(orderDetail);
+            })
+
+            function CreateOrderDetails(orderDetail) {
+                $.ajax({
+                    type: "POST",
+                    url,
+                    data: JSON.stringify(orderDetail),
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function (response) {
+                        console.log('ERROR')
+                        console.log(response)
+                    }
+                });
+
+                return false;
+            }
+
+            function LoadOrderDetails(orderId) {
                 $("#dataTable tbody tr").remove();
                 $.ajax({
                     url: 'https://localhost:44393' + '@Url.Action("GetOrderDetailsById")' + '/' + orderId,
@@ -133,55 +163,6 @@
                 return false;
             }
 
-            function LoadAllProducts() {
-                $.ajax({
-                    url: 'https://localhost:44393' + '@Url.Action("GetProducts")',
-                    dataType: 'json',
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-                        console.log('LoadAllProducts');
-                        console.log(data);
-                        $.each(data, function (i, item) {
-                            var option = `<option value=${item.ProductID}>${item.ProductName}</option>`;
-                            $("#productsSelect").append(option);
-                        })
-                    },
-                    error: function (response) {
-                        console.log('ERROR')
-                        console.log(response)
-                    }
-                });
-
-                return false;
-            }
-
-            $("#btnSave").click(function () {
-                var orderDetail = {};
-                orderDetail.OrderID = orderId;
-                orderDetail.ProductID = Number($("#productsSelect option:selected").val());
-                orderDetail.Quantity = Number($("#cantidad").val());
-                CreateOrderDetails(orderDetail);
-            })
-
-            function CreateOrderDetails(orderDetail) {
-                console.log(orderDetail)
-                $.ajax({
-                    type: "POST",
-                    url,
-                    data: '{ orderDetail: ' + JSON.stringify(orderDetail) + ' }',
-                    dataType: 'json',
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-                        console.log(data);
-                    },
-                    error: function (response) {
-                        console.log('ERROR')
-                        console.log(response)
-                    }
-                });
-
-                return false;
-            }
         });
     </script>
 }

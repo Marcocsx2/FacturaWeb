@@ -12,7 +12,46 @@
     <br>
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Lista de Facturas</h1>
+    <h1 class="h3 mb-2 text-gray-800">Facturas</h1>
+
+    <br>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Nueva Orden</h6>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md my-2">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="clientId">Cliente</label>
+                                </div>
+                                <select class="custom-select" id="clientId" name="clientId">
+                                    <option selected>Seleccionar...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md my-2">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="orderDdate">Fecha</label>
+                                </div>
+                                <input type="date" class="form-control" id="orderDdate" name="orderDdate" />
+                            </div>
+                        </div>
+                        <div class="col-sm my-2">
+                            <div class="input-group justify-content-center">
+                                <a id="btnSave" class="btn btn-block mx-5 btn-primary">Crear Orden</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <br>
 
@@ -79,7 +118,7 @@
                         </div>
                         <div class="col-sm my-2">
                             <div class="input-group justify-content-center">
-                                <button type="submit" class="btn btn-block mx-5 btn-primary">Buscar</button>
+                                <a id="btnSearch" class="btn btn-block mx-5 btn-primary">Buscar</a>
                             </div>
                         </div>
                     </div>
@@ -103,8 +142,7 @@
                             <th>Fecha</th>
                             <th>Cliente</th>
                             <th>Total</th>
-                            <th>Estado</th>
-                            <th>Cancelar</th>
+                            <th>Acci&oacute;n</th>
                             <th>Ver</th>
                         </tr>
                     </thead>
@@ -114,34 +152,113 @@
                             <th>Fecha</th>
                             <th>Cliente</th>
                             <th>Total</th>
-                            <th>Estado</th>
-                            <th>Cancelar</th>
+                            <th>Acci&oacute;n</th>
                             <th>Ver</th>
                         </tr>
                     </tfoot>
                     <tbody>
-
-                        @foreach (var order in Model)
-                        {
-                            <tr>
-                                <td>@order.OrderID </td>
-                                <td>@order.OrderDate</td>
-                                <td>@order.CustomerID</td>
-                                <td>S/. 367.00</td>
-                                <td>@order.Active</td>
-                                <td><a type="button" class="btn btn-danger">Cancelar</a></td>
-                                <td>
-                                    @Html.ActionLink("Detaller de Factura", "Details", "Factura")
-                                    @*<a type="button" class="btn btn-info"
-                                        href="/factura-detalle.html">Ver</a>*@
-                                </td>
-                            </tr>
-                        }
-
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        console.log('https://localhost:44393' + '@Url.Action("GetOrders")');
+        $(function () {
+            LoadData();
+            LoadAllClients();
+
+            function LoadData() {
+                $("#dataTable tbody tr").remove();
+
+                $.ajax({
+                    url: 'https://localhost:44393' + '@Url.Action("GetOrders")',
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        console.log(data);
+                        $.each(data, function (i, item) {
+                            var rows = "<tr id='row" + item.OrderID + "'>"
+                                + "<td>" + item.OrderID + "</td>"
+                                + "<td>" + item.OrderDate + "</td>"
+                                + "<td>" + item.CustomerID + "</td>"
+                                //+ "<td>" + item.Customer.FullName + "</td>"
+                                + "<td>" + 1200 + "</td>"
+                                //+ "<td>" + item.orderDetails + "</td>"
+                                + `${
+                                    item.Active
+                                    ? "<td><a type='button' class='btn btn-danger' onclick='cancelOrder(" + item.OrderID + ")'>Cancelar</a></td>"
+                                    : "<td><a type='button' class='btn btn-success' onclick='enableOrder(" + item.OrderID + ")'>Activar</a></td>"
+                                }`
+                                + "<td><a type='button' class='btn btn-info' href=/Factura/Details/" + item.OrderID +">Detalles</a></td>"
+                                //+ "<td><a type='button' class='btn btn-info' onclick='getDetails(" + item.OrderID + ")'>Detalles</a></td>"
+                                + "</tr>";
+                            $("#dataTable tbody").append(rows);
+                        })
+                    },
+                    error: function (response) {
+                        console.log(response)
+                        var r = jQuery.parseJSON(response.responseText);
+                        alert('Message: ' + r.Message);
+                        alert('StackTrace: ' + r.StackTrace);
+                        alert('ExceptionType: ' + r.ExceptionType);
+                    }
+                });
+
+                return false;
+            }
+
+            $("#btnSave").click(function () {
+                var order = {};
+                order.CustomerID = Number($("#clientId option:selected").val());
+                order.OrderDate = $("#orderDdate").val();
+                order.Active = true;
+                CreateOrder(order);
+            })
+
+            function CreateOrder(order) {
+                $.ajax({
+                    type: "POST",
+                    url: 'https://localhost:44393' + '@Url.Action("CreateOrder")',
+                    data: '{ order: ' + JSON.stringify(order) + ' }',
+                    //data: JSON.stringify(order),
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function (response) {
+                        console.log('ERROR')
+                        console.log(response)
+                    }
+                });
+            }
+
+            function LoadAllClients() {
+                $.ajax({
+                    url: 'https://localhost:44393' + '@Url.Action("GetClients")',
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        console.log('LoadAllClients');
+                        console.log(data);
+                        $.each(data, function (i, item) {
+                            var option = `<option value=${item.CustomerID}>${item.FullName} (${item.DNI})</option>`;
+                            $("#clientId").append(option);
+                        })
+                    },
+                    error: function (response) {
+                        console.log('ERROR')
+                        console.log(response)
+                    }
+                });
+
+                return false;
+            }
+        });
+    </script>
+}
