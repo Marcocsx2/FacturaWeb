@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace FacturaWeb.Controllers
 {
-    public class FacturaController : Controller
+    public class OrderController : Controller
     {
 
         readonly OrderProxy proxy = new OrderProxy();
