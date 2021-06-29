@@ -214,9 +214,9 @@
 
             $("#btnSave").click(function () {
                 var order = {};
-                order.CustomerID = Number($("#clientId option:selected").val());
+                order.CustomerID= Number($("#clientId option:selected").val());
                 order.OrderDate = $("#orderDdate").val();
-                order.Active = true;
+                //order.Active = true;
                 CreateOrder(order);
             })
 
@@ -224,7 +224,7 @@
                 $.ajax({
                     type: "POST",
                     url: 'https://localhost:44393' + '@Url.Action("CreateOrder")',
-                    data: '{ order: ' + JSON.stringify(order) + ' }',
+                    data: '{ request: ' + JSON.stringify(order) + ' }',
                     //data: JSON.stringify(order),
                     dataType: 'json',
                     contentType: "application/json; charset=utf-8",
@@ -240,7 +240,7 @@
 
             function LoadAllClients() {
                 $.ajax({
-                    url: 'https://localhost:44393' + '@Url.Action("GetClients")',
+                    url: 'https://localhost:44393' + '@Url.Action("GetCustomers")',
                     dataType: 'json',
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {

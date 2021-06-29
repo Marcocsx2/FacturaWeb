@@ -168,7 +168,7 @@
                 $.ajax({
                     type: "POST",
                     url,
-                    data: '{ orderDetail: ' + JSON.stringify(orderDetail) + ' }',
+                    data: '{ request: ' + JSON.stringify(orderDetail) + ' }',
                     dataType: 'json',
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
