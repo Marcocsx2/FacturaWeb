@@ -194,7 +194,7 @@
                                     ? "<td><a type='button' class='btn btn-danger' onclick='cancelOrder(" + item.OrderID + ")'>Cancelar</a></td>"
                                     : "<td><a type='button' class='btn btn-success' onclick='enableOrder(" + item.OrderID + ")'>Activar</a></td>"
                                 }`
-                                + "<td><a type='button' class='btn btn-info' href=/Factura/Details/" + item.OrderID +">Detalles</a></td>"
+                                + "<td><a type='button' class='btn btn-info' href=/Order/Details/" + item.OrderID +">Detalles</a></td>"
                                 //+ "<td><a type='button' class='btn btn-info' onclick='getDetails(" + item.OrderID + ")'>Detalles</a></td>"
                                 + "</tr>";
                             $("#dataTable tbody").append(rows);
